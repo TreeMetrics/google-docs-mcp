@@ -1,0 +1,16 @@
+services:
+  google-docs-mcp:
+    build: .
+    image: google-docs-mcp:local
+    container_name: google-docs-mcp
+    restart: unless-stopped
+    ports:
+      # Host:container. 8080 is often taken locally — pick any free host port;
+      # BASE_URL in .env must match the host-side URL for OAuth callbacks.
+      - "8088:8080"
+    env_file:
+      - .env
+    # Sensible defaults; .env overrides anything here.
+    environment:
+      MCP_TRANSPORT: httpStream
+      PORT: "8080"
